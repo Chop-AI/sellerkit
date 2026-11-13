@@ -4,6 +4,6 @@ window.SELLERKIT_CONFIG = {
   affiliateUrl: "",
   affiliateLabel: "Партнёрский инструмент для селлеров",
   // Optional Telegram bot username after launch
-  telegramBot: "",
+  telegramBot: "New118_bot",
   defaultFees: { wb: 15, ozon: 14, yandex: 12 }
 };

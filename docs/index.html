@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SellerKit — юнит-экономика WB / Ozon / Яндекс Маркет</title>
+  <meta name="description" content="Бесплатные калькуляторы маржи, ДРР и точки безубыточности для селлеров Wildberries, Ozon и Яндекс Маркета." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="top">
+    <div class="brand">Seller<span>Kit</span></div>
+    <p class="tag">Считай маржу до закупки партии. Без регистрации.</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="unit" type="button">Маржа карточки</button>
+    <button class="tab" data-tab="drr" type="button">ДРР</button>
+    <button class="tab" data-tab="breakeven" type="button">Безубыточность</button>
+  </nav>
+
+  <main>
+    <section id="unit" class="panel active">
+      <div class="grid">
+        <form class="card" id="unitForm">
+          <label>Маркетплейс
+            <select id="mp">
+              <option value="wb">Wildberries</option>
+              <option value="ozon">Ozon</option>
+              <option value="yandex">Яндекс Маркет</option>
+            </select>
+          </label>
+          <div class="row2">
+            <label>Цена продажи, ₽<input id="price" type="number" value="2490" min="0" step="1" /></label>
+            <label>Себестоимость, ₽<input id="cogs" type="number" value="900" min="0" step="1" /></label>
+          </div>
+          <div class="row2">
+            <label>Комиссия МП, %<input id="fee" type="number" value="15" min="0" max="60" step="0.1" /></label>
+            <label>Логистика туда, ₽<input id="logistics" type="number" value="120" min="0" step="1" /></label>
+          </div>
+          <div class="row2">
+            <label>Выкуп, %<input id="buyout" type="number" value="85" min="1" max="100" step="1" /></label>
+            <label>Реклама на заказ, ₽<input id="ads" type="number" value="180" min="0" step="1" /></label>
+          </div>
+          <label>Прочие расходы на заказ, ₽<input id="other" type="number" value="40" min="0" step="1" /></label>
+          <button type="button" id="unitCalc" class="cta">Пересчитать</button>
+        </form>
+        <aside class="card result">
+          <div class="muted">Чистая прибыль на выкупленный заказ</div>
+          <div class="kpi" id="profit">—</div>
+          <div class="line"><span>Маржа</span><strong id="margin">—</strong></div>
+          <div class="line"><span>Комиссия МП</span><strong id="feeRub">—</strong></div>
+          <div class="line"><span>Эфф. логистика</span><strong id="logEff">—</strong></div>
+          <div class="line"><span>Все расходы</span><strong id="costs">—</strong></div>
+          <p class="verdict" id="verdict"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="drr" class="panel">
+      <div class="grid">
+        <form class="card" id="drrForm">
+          <label>Рекламный бюджет, ₽<input id="adBudget" type="number" value="25000" min="0" step="1" /></label>
+          <label>Выручка с рекламы, ₽<input id="adRevenue" type="number" value="120000" min="0" step="1" /></label>
+          <label>Заказы с рекламы<input id="adOrders" type="number" value="48" min="0" step="1" /></label>
+          <button type="button" id="drrCalc" class="cta">Считать ДРР</button>
+        </form>
+        <aside class="card result">
+          <div class="muted">ДРР</div>
+          <div class="kpi" id="drrValue">—</div>
+          <div class="line"><span>CPO (цена заказа)</span><strong id="cpo">—</strong></div>
+          <div class="line"><span>Выручка на 1₽ рекламы</span><strong id="roas">—</strong></div>
+          <p class="verdict" id="drrVerdict"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="breakeven" class="panel">
+      <div class="grid">
+        <form class="card" id="beForm">
+          <label>Постоянные расходы в месяц, ₽<input id="fixed" type="number" value="80000" min="0" step="1" /></label>
+          <label>Прибыль с 1 заказа, ₽<input id="unitProfit" type="number" value="350" min="1" step="1" /></label>
+          <label>Целевой доход сверх нуля, ₽<input id="target" type="number" value="50000" min="0" step="1" /></label>
+          <button type="button" id="beCalc" class="cta">Считать объём</button>
+        </form>
+        <aside class="card result">
+          <div class="muted">Заказов до безубыточности</div>
+          <div class="kpi" id="beOrders">—</div>
+          <div class="line"><span>До цели по прибыли</span><strong id="beTargetOrders">—</strong></div>
+          <p class="verdict" id="beVerdict"></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>SellerKit — бесплатно. Telegram-бот тех же расчётов: подключится после токена.</p>
+    <p id="affiliateSlot" class="aff muted"></p>
+  </footer>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
